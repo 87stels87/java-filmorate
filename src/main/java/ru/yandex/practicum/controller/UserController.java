@@ -6,8 +6,10 @@ import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.User;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
 
 @RestController
 @Slf4j
@@ -24,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public User create(@RequestBody User user, HttpServletRequest request) {
+    public User create(@Valid @RequestBody User user, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (user.getEmail().isEmpty() || (!user.getEmail().contains("@"))) {
