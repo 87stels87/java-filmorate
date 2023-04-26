@@ -48,7 +48,7 @@ public class FilmController {
     }
 
     @PutMapping()
-    public Film update(@RequestBody Film film, HttpServletRequest request) {
+    public Film update(@Valid @RequestBody Film film, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (films.containsKey(film.getId())) {

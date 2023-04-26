@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping()
-    public User update(@RequestBody User user, HttpServletRequest request) {
+    public User update(@Valid @RequestBody User user, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (users.containsKey(user.getId())) {
