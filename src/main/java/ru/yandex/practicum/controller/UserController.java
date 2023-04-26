@@ -15,7 +15,7 @@ import java.util.HashMap;
 @RestController
 @Slf4j
 @RequestMapping("/users")
-public class UserController extends AbstractController{
+public class UserController extends AbstractController {
 
     @GetMapping()
     public Collection<User> findAll(HttpServletRequest request) {
@@ -52,6 +52,9 @@ public class UserController extends AbstractController{
         log.info("Получен запрос к эндпоинту: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (users.containsKey(user.getId())) {
+            if(user.getName() == null){
+                user.setName(user.getLogin());
+            }
             users.replace(user.getId(), user);
         } else {
             throw new ValidationException("нет такого id");
