@@ -15,9 +15,7 @@ import java.util.HashMap;
 @RestController
 @Slf4j
 @RequestMapping("/users")
-public class UserController {
-    private HashMap<Integer, User> users = new HashMap<>();
-    int id = 0;
+public class UserController extends AbstractController{
 
     @GetMapping()
     public Collection<User> findAll(HttpServletRequest request) {
