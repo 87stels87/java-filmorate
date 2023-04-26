@@ -2,6 +2,7 @@ package ru.yandex.practicum.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.exceptions.UserAlreadyExistsException;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.User;
 
@@ -43,7 +44,7 @@ public class UserController {
             users.put(++id, user);
             user.setId(id);
         } else {
-            return null;
+            throw new UserAlreadyExistsException("Юзер уже существует");
         }
         return user;
     }

@@ -2,6 +2,7 @@ package ru.yandex.practicum.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.exceptions.FilmAlreadyExistsException;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.Film;
 
@@ -41,7 +42,7 @@ public class FilmController {
             films.put(++id, film);
             film.setId(id);
         } else {
-            return null;
+            throw new FilmAlreadyExistsException("Фильм уже существует");
         }
         return film;
     }
