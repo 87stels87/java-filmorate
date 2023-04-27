@@ -48,8 +48,8 @@ public class FilmController extends AbstractController {
         log.info("Получен запрос к эндпоинту на апдейт фильма: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            throw new ValidationException("Дата не должна быть менее 28 декабря 1895 года");
-        } else if (films.containsKey(film.getId())) {
+            throw new ValidationException("Дата не должна быть менее 28 декабря 1895 года");}
+         else if (films.containsKey(film.getId())) {
             films.replace(film.getId(), film);
         } else {
             throw new ValidationException("id фильма не найден");
