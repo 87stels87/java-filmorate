@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
 
 @RestController
 @Slf4j
 @RequestMapping("/films")
 public class FilmController extends AbstractController {
 
+
     @GetMapping()
     public Collection<Film> findAll(HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: '{} {}'",
+        log.info("Получен запрос к эндпоинту на просмотр всех фильмов: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         return films.values();
     }
 
     @PostMapping()
-    public Film create(@Valid @RequestBody Film film, HttpServletRequest request) throws ValidationException {
-        log.info("Получен запрос к эндпоинту: '{} {}'",
+    public Film create(@Valid @RequestBody Film film, HttpServletRequest request) {
+        log.info("Получен запрос к эндпоинту на создание фильма: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (film.getName().isEmpty()) {
             throw new ValidationException("Имя не должно быть пустым");
@@ -45,7 +45,7 @@ public class FilmController extends AbstractController {
 
     @PutMapping()
     public Film update(@Valid @RequestBody Film film, HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: '{} {}'",
+        log.info("Получен запрос к эндпоинту на апдейт фильма: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             throw new ValidationException("Дата не должна быть менее 28 декабря 1895 года");

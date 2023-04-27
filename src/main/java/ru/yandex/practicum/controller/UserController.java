@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
 
 @RestController
 @Slf4j
@@ -19,14 +18,14 @@ public class UserController extends AbstractController {
 
     @GetMapping()
     public Collection<User> findAll(HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: '{} {}'",
+        log.info("Получен запрос к эндпоинту на просмотр всех юзеров: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         return users.values();
     }
 
     @PostMapping()
     public User create(@Valid @RequestBody User user, HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: '{} {}'",
+        log.info("Получен запрос к эндпоинту на создание юзера: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (user.getEmail().isEmpty() || (!user.getEmail().contains("@"))) {
             throw new ValidationException("email не должен быть пустым, а также должен создержать @");
@@ -49,7 +48,7 @@ public class UserController extends AbstractController {
 
     @PutMapping()
     public User update(@Valid @RequestBody User user, HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: '{} {}'",
+        log.info("Получен запрос к эндпоинту на апдейт юзера: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (users.containsKey(user.getId())) {
             if(user.getName() == null){
