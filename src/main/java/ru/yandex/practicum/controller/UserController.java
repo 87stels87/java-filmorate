@@ -29,8 +29,7 @@ public class UserController extends AbstractController {
                 request.getMethod(), request.getRequestURI());
         if (user.getEmail().isEmpty() || (!user.getEmail().contains("@"))) {
             throw new ValidationException("email не должен быть пустым, а также должен создержать @");
-        } else
-        if (user.getLogin().isEmpty() || user.getLogin().contains(" ")) {
+        } else if (user.getLogin().isEmpty() || user.getLogin().contains(" ")) {
             throw new ValidationException("логин не должен быть пустым, а также должен создержать пробел");
         } else if (user.getBirthday().isAfter(LocalDate.now())) {
             throw new ValidationException("день рождения не может быть в будущем");
@@ -52,7 +51,7 @@ public class UserController extends AbstractController {
         log.info("Получен запрос к эндпоинту на апдейт юзера: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (users.containsKey(user.getId())) {
-            if (user.getName() == null){
+            if (user.getName() == null) {
                 user.setName(user.getLogin());
             }
             users.replace(user.getId(), user);
