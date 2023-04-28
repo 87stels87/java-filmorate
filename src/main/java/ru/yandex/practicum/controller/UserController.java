@@ -52,7 +52,7 @@ public class UserController extends AbstractController {
         log.info("Получен запрос к эндпоинту на апдейт юзера: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         if (users.containsKey(user.getId())) {
-            if(user.getName() == null){
+            if (user.getName() == null){
                 user.setName(user.getLogin());
             }
             users.replace(user.getId(), user);
