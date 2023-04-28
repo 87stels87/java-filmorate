@@ -15,7 +15,7 @@ public abstract class AbstractController {
 
     public final HashMap<Integer, Film> films = new HashMap<>();
     public final HashMap<Integer, User> users = new HashMap<>();
-    protected final LocalDate FIRST_DAY_OF_CINEMA = LocalDate.of(1895, 12, 28);
+    protected static final LocalDate FIRST_DAY_OF_CINEMA = LocalDate.of(1895, 12, 28);
     protected int id = 0;
 
 }
