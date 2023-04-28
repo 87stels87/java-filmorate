@@ -47,7 +47,6 @@ public class FilmControllerTest extends BaseControllerTest {
         assertEquals(filmController.films.size(), 2);
     }
 
-
     @Test
     public void testCreateFilmWithEmptyName() {
         film1 = new Film(1, "", "описание", LocalDate.of(2014, 10, 12),
@@ -96,7 +95,6 @@ public class FilmControllerTest extends BaseControllerTest {
         assertEquals(expectedExceptionMessage, exception.getMessage());
     }
 
-
     @Test
     public void testCreateFilmWithReleaseDateEquallyDateFirstFilmInCinema() {
         film1 = new Film(1, "Название", "Описание",
@@ -129,7 +127,6 @@ public class FilmControllerTest extends BaseControllerTest {
         );
         assertEquals(expectedExceptionMessage, exception.getMessage());
     }
-
 
     @Test
     public void testUpdateFilmWithEquallyId() {
