@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.User;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 
 
@@ -12,8 +13,9 @@ import java.util.HashMap;
 @Slf4j
 public abstract class AbstractController {
 
-    public HashMap<Integer, Film> films = new HashMap<>();
-    public HashMap<Integer, User> users = new HashMap<>();
+    public final HashMap<Integer, Film> films = new HashMap<>();
+    public final HashMap<Integer, User> users = new HashMap<>();
+    protected final LocalDate FIRST_DAY_OF_CINEMA = LocalDate.of(1895, 12, 28);
     protected int id = 0;
 
 }
