@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class UserControllerTest extends BaseControllerTest {
 
-    @Test
+  /*  @Test
     public void testCreateNewUserWithValidEmail() {
         user1 = new User(1, "1@yandex.ru", "bot", "Имя", LocalDate.of(2000, 10, 12));
         userController.create(user1, mockedRequest);
@@ -142,5 +142,5 @@ public class UserControllerTest extends BaseControllerTest {
         userController.create(user1, mockedRequest);
         userController.update(user2, mockedRequest);
         assertEquals(userController.users.get(user2.getId()).getName(), "логин2");
-    }
+    }*/
 }

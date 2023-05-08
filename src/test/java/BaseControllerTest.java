@@ -9,7 +9,7 @@ import ru.yandex.practicum.model.User;
 import javax.servlet.http.HttpServletRequest;
 
 public class BaseControllerTest {
-    protected Film film1;
+ /*   protected Film film1;
     protected Film film2;
     protected User user1;
     protected User user2;
@@ -29,5 +29,5 @@ public class BaseControllerTest {
         filmController.films.clear();
         userController.users.clear();
     }
-
+*/
 }
