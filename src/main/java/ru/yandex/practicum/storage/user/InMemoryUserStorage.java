@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 @Component
 public class InMemoryUserStorage implements UserStorage{
-    public final HashMap<Integer, User> users = new HashMap<>();
-    private static int id = 0;
+    public final HashMap<Long, User> users = new HashMap<>();
+    private static long id = 0;
 
 
     @Override
@@ -28,7 +28,7 @@ public class InMemoryUserStorage implements UserStorage{
             throw new ValidationException("логин не должен быть пустым, а также должен создержать пробел");
         } else if (user.getBirthday().isAfter(LocalDate.now())) {
             throw new ValidationException("день рождения не может быть в будущем");
-        } else if (user.getName() == null) {
+        } else if (user.getName() == null || user.getName().isEmpty()) {
             user.setName(user.getLogin());
             users.put(++id, user);
             user.setId(id);
@@ -52,5 +52,10 @@ public class InMemoryUserStorage implements UserStorage{
             throw new ValidationException("нет такого id");
         }
         return user;
+    }
+
+    @Override
+    public User findUserById(long id) {
+       return users.get(id);
     }
 }

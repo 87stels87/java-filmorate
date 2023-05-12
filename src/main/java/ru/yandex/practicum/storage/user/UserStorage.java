@@ -1,15 +1,18 @@
 package ru.yandex.practicum.storage.user;
 
-import ru.yandex.practicum.model.Film;
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.model.User;
 
 import java.util.Collection;
 
+@Component
 public interface UserStorage {
 
-     Collection<User> findAll();
+    Collection<User> findAll();
 
-     User create(User user);
+    User create(User user);
 
-     User update(User user);
+    User update(User user);
+
+    User findUserById(long id);
 }

@@ -2,6 +2,7 @@ package ru.yandex.practicum.storage.film;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.exceptions.FilmAlreadyExistsException;
+import ru.yandex.practicum.exceptions.NotFoundException;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.Film;
 
@@ -9,14 +10,14 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 
-import static ru.yandex.practicum.controller.AbstractController.FIRST_DAY_OF_CINEMA;
+import static ru.yandex.practicum.controller.FilmController.FIRST_DAY_OF_CINEMA;
 
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
 
-    public final HashMap<Integer, Film> films = new HashMap<>();
-    private static int id = 0;
+    public final HashMap<Long, Film> films = new HashMap<>();
+    private static long id = 0;
 
     @Override
     public Collection<Film> findAll() {
@@ -51,5 +52,14 @@ public class InMemoryFilmStorage implements FilmStorage {
             throw new ValidationException("id фильма не найден");
         }
         return film;
+    }
+
+    @Override
+    public Film findFilmById(long id) {
+        if (films.get(id) == null) {
+            throw new NotFoundException("с таким id фильма нет");
+        } else {
+            return films.get(id);
+        }
     }
 }
