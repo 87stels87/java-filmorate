@@ -31,7 +31,7 @@ public class Film {
         this.releaseDate = releaseDate;
         this.duration = duration;
 
-        if(likes == null){
+        if (likes == null) {
             this.likes = new HashSet<>();
         }
     }

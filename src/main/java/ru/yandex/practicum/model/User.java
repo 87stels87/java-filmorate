@@ -33,7 +33,7 @@ public class User {
         this.login = login;
         this.name = name;
         this.birthday = birthday;
-        if(friends == null){
+        if (friends == null) {
             this.friends = new HashSet<>();
         }
 

@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InMemoryUserStorageTest {
 
-    InMemoryUserStorage inMemoryUserStorage =  new InMemoryUserStorage();;
+    InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+    ;
     protected User user1;
     protected User user2;
 
@@ -111,5 +112,4 @@ public class InMemoryUserStorageTest {
         );
         assertEquals(invalid, exception.getMessage());
     }
-
 }

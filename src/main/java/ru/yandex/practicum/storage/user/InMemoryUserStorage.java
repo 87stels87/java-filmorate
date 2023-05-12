@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 @Component
-public class InMemoryUserStorage implements UserStorage{
+public class InMemoryUserStorage implements UserStorage {
     public final HashMap<Long, User> users = new HashMap<>();
     private static long id = 0;
 
@@ -56,6 +56,6 @@ public class InMemoryUserStorage implements UserStorage{
 
     @Override
     public User findUserById(long id) {
-       return users.get(id);
+        return users.get(id);
     }
 }

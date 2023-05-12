@@ -42,8 +42,7 @@ public class FilmService {
     }
 
     public List<Film> findPopularFilms(Integer count) {
-      //  List<Film> popularFilms = new ArrayList<>();
-        return filmStorage.findAll().stream().sorted((f1,f2)->f2.getLikes().size()-f1.getLikes().size())
+        return filmStorage.findAll().stream().sorted((f1, f2) -> f2.getLikes().size() - f1.getLikes().size())
                 .limit(count).collect(Collectors.toList());
     }
 }
