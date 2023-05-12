@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public User findUserByiD( @PathVariable final long id, HttpServletRequest request) {
+    public User findUserByiD (@PathVariable final long id, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на просмотр юзера по id: '{} {}'",
                 request.getMethod(), request.getRequestURI());
         return userService.findUserById(id);
@@ -92,6 +92,5 @@ public class UserController {
         return Map.of(
                 "errorMessage", e.getMessage()
         );
-
     }
 }
