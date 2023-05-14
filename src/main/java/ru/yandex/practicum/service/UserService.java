@@ -3,7 +3,6 @@ package ru.yandex.practicum.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.exceptions.NotFoundException;
-import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.storage.user.UserStorage;
 
