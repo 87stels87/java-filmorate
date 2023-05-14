@@ -21,24 +21,30 @@ public class FilmService {
         this.userStorage = userStorage;
     }
 
-    public void addLike(long id, long userId) {
-        if (filmStorage.findFilmById(id) == null) {
+    private Film findFilmOrThrow(long id) {
+        Film film = filmStorage.findFilmById(id);
+        if (film == null) {
             throw new NotFoundException("с таким id фильма нет");
-        } else if (userStorage.findUserById(userId) == null) {
+        }
+        return film;
+    }
+
+    private void checkUserExistsOrThrow(long userId) {
+        if (userStorage.findUserById(userId) == null) {
             throw new NotFoundException("с таким id юзера нет");
-        } else {
-            filmStorage.findFilmById(id).getLikes().add(userId);
         }
     }
 
+    public void addLike(long id, long userId) {
+        findFilmOrThrow(id);
+        checkUserExistsOrThrow(userId);
+        filmStorage.findFilmById(id).getLikes().add(userId);
+    }
+
     public void removeLike(long id, long userId) {
-        if (filmStorage.findFilmById(id) == null) {
-            throw new NotFoundException("с таким id фильма нет");
-        } else if (userStorage.findUserById(userId) == null) {
-            throw new NotFoundException("с таким id юзера нет");
-        } else {
-            filmStorage.findFilmById(id).getLikes().remove(userId);
-        }
+        findFilmOrThrow(id);
+        checkUserExistsOrThrow(userId);
+        filmStorage.findFilmById(id).getLikes().remove(userId);
     }
 
     public List<Film> findPopularFilms(Integer count) {

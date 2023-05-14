@@ -3,6 +3,7 @@ package ru.yandex.practicum.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.exceptions.NotFoundException;
+import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.storage.user.UserStorage;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    UserStorage userStorage;
+    protected UserStorage userStorage;
 
 
     @Autowired
@@ -20,12 +21,26 @@ public class UserService {
         this.userStorage = userStorage;
     }
 
+    private void checkUserExistsOrThrow(long id) {
+        if (id < 1) {
+            throw new NotFoundException("с таким id юзера нет");
+        } else if (id > userStorage.findAll().size()) {
+            throw new NotFoundException("с таким id юзера нет");
+        }
+    }
+
+    private void checkFriendExistsOrThrow(long friendId) {
+        if (friendId < 1) {
+            throw new NotFoundException("с таким id юзера нет");
+        } else if (friendId > userStorage.findAll().size()) {
+            throw new NotFoundException("с таким id юзера нет");
+        }
+    }
+
     public void addFriend(long id, long friendId) {
-        if (id < 1 || friendId < 1) {
-            throw new NotFoundException("с таким id юзера нет");
-        } else if (id > userStorage.findAll().size() || friendId > userStorage.findAll().size()) {
-            throw new NotFoundException("с таким id юзера нет");
-        } else if (id == friendId) {
+        checkUserExistsOrThrow(id);
+        checkFriendExistsOrThrow(friendId);
+        if (id == friendId) {
             throw new NotFoundException("нельзя добавить себя в друзья");
         } else {
             userStorage.findUserById(id).getFriends().add(friendId);

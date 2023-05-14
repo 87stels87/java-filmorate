@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InMemoryUserStorageTest {
 
-    InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+    private InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
 
     protected User user1;
     protected User user2;

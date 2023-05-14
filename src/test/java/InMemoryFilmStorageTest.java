@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class InMemoryFilmStorageTest {
-    InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
+    private InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
 
     protected Film film1;
     protected Film film2;
