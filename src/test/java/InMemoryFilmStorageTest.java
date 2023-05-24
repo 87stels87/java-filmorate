@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.Film;
+import ru.yandex.practicum.model.Rating;
 import ru.yandex.practicum.storage.film.InMemoryFilmStorage;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testCreateNewValidFilm() {
         film1 = new Film(null, "название", "описание", LocalDate.of(2014, 10, 12),
+                null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         assertEquals(inMemoryFilmStorage.films.size(), 1);
@@ -31,9 +33,9 @@ public class InMemoryFilmStorageTest {
 
     @Test
     public void testCreateFilmsDifferentId() {
-        film1 = new Film(null, "Название", "описание", LocalDate.of(2014, 10, 12),
+        film1 = new Film(null, "Название", "описание", LocalDate.of(2014, 10, 12), null, Rating.PG,
                 100);
-        film2 = new Film(null, "Название", "описание", LocalDate.of(2014, 10, 12),
+        film2 = new Film(null, "Название", "описание", LocalDate.of(2014, 10, 12), null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         inMemoryFilmStorage.create(film2);
@@ -42,7 +44,7 @@ public class InMemoryFilmStorageTest {
 
     @Test
     public void testCreateFilmWithEmptyName() {
-        film1 = new Film(null, "", "описание", LocalDate.of(2014, 10, 12),
+        film1 = new Film(null, "", "описание", LocalDate.of(2014, 10, 12), null, Rating.PG,
                 100);
         final String expectedExceptionMessage = "Имя не должно быть пустым";
         ValidationException exception = assertThrows(
@@ -56,7 +58,7 @@ public class InMemoryFilmStorageTest {
 
     @Test
     public void testCreateFilmWithSpiceInName() {
-        film1 = new Film(null, " ", "описание", LocalDate.of(2014, 10, 12),
+        film1 = new Film(null, " ", "описание", LocalDate.of(2014, 10, 12), null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         assertEquals(inMemoryFilmStorage.films.size(), 1);
@@ -65,7 +67,7 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testCreateFilmWithDescriptionsWith200character() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(2014, 10, 12),
+                LocalDate.of(2014, 10, 12), null, Rating.PG,
                 100);
         film1.setDescription("f".repeat(200));
         inMemoryFilmStorage.create(film1);
@@ -75,7 +77,7 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testCreateFilmWithDescriptionsWith201character() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(2014, 10, 12),
+                LocalDate.of(2014, 10, 12), null, Rating.PG,
                 100);
         film1.setDescription("f".repeat(201));
         final String expectedExceptionMessage = "Описание не должно превышать 200 символов";
@@ -91,7 +93,7 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testCreateFilmWithReleaseDateEquallyDateFirstFilmInCinema() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(1895, 12, 28),
+                LocalDate.of(1895, 12, 28), null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         assertEquals(inMemoryFilmStorage.films.size(), 1);
@@ -100,7 +102,7 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testCreateFilmWithReleaseDateAfterDateFirstFilmInCinema() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(1895, 12, 29),
+                LocalDate.of(1895, 12, 29), null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         assertEquals(inMemoryFilmStorage.films.size(), 1);
@@ -109,7 +111,7 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testCreateFilmWithReleaseDateBeforeDateFirstFilmInCinema() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(1895, 12, 27),
+                LocalDate.of(1895, 12, 27), null, Rating.PG,
                 100);
         final String expectedExceptionMessage = "Дата не должна быть менее 28 декабря 1895 года";
         ValidationException exception = assertThrows(
@@ -124,10 +126,10 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testUpdateFilmWithDifferentId() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(1895, 12, 28),
+                LocalDate.of(1895, 12, 28), null, Rating.PG,
                 100);
         film2 = new Film(null, "Обновленное название", "Описание",
-                LocalDate.of(1895, 12, 28),
+                LocalDate.of(1895, 12, 28), null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         final String expectedExceptionMessage = "id фильма не найден";
@@ -143,10 +145,10 @@ public class InMemoryFilmStorageTest {
     @Test
     public void testUpdateFilmWithReleaseDateBeforeDateFirstFilmInCinema() {
         film1 = new Film(null, "Название", "Описание",
-                LocalDate.of(1895, 12, 28),
+                LocalDate.of(1895, 12, 28), null, Rating.PG,
                 100);
         film2 = new Film(null, "Обновленное название", "Описание",
-                LocalDate.of(1895, 12, 27),
+                LocalDate.of(1895, 12, 27), null, Rating.PG,
                 100);
         inMemoryFilmStorage.create(film1);
         final String expectedExceptionMessage = "Дата не должна быть менее 28 декабря 1895 года";
