@@ -12,6 +12,7 @@ import java.util.Set;
 public class Film {
 
     private long id;
+
     private Set<Long> likes;
 
     @NotEmpty
@@ -21,21 +22,21 @@ public class Film {
 
     private LocalDate releaseDate;
 
-    private Set<Genre> genre;
+    private String genre;
 
-    private Rating rating;
+    private String mpa;
 
     @Positive
     private int duration;
 
-    public Film(Set<Long> likes, @NotEmpty String name, String description, LocalDate releaseDate, Set<Genre> genre, Rating rating, @Positive int duration) {
+    public Film(Set<Long> likes, @NotEmpty String name, String description, LocalDate releaseDate, String genre, String mpa, @Positive int duration) {
 
         this.name = name;
         this.description = description;
         this.releaseDate = releaseDate;
         this.duration = duration;
         this.genre = genre;
-        this.rating = rating;
+        this.mpa = mpa;
         if (likes == null) {
             this.likes = new HashSet<>();
         }
