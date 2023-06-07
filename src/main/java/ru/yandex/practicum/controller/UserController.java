@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.exceptions.NotFoundException;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.service.UserService;
-import ru.yandex.practicum.storage.user.InMemoryUserStorage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -21,34 +21,41 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
 
-    private final InMemoryUserStorage inMemoryUserStorage;
     private final UserService userService;
 
     @Autowired
-    public UserController(InMemoryUserStorage inMemoryUserStorage, UserService userService) {
-        this.inMemoryUserStorage = inMemoryUserStorage;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    @GetMapping(value = "/{id}")
+    public Optional<User> getUserByID(@PathVariable final long id, HttpServletRequest request) {
+        log.info("Получен запрос к эндпоинту на просмотр юзера по id: '{} {}'",
+                request.getMethod(), request.getRequestURI());
+        return userService.getUserByID(id);
+    }
+
+
     @GetMapping()
-    public Collection<User> findAll(HttpServletRequest request) {
+    public List<User> findAll(HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на просмотр всех юзеров: '{} {}'",
                 request.getMethod(), request.getRequestURI());
-        return inMemoryUserStorage.findAll();
+        return userService.findAll();
     }
 
     @PostMapping()
     public User create(@Valid @RequestBody User user, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на создание юзера: '{} {}'",
                 request.getMethod(), request.getRequestURI());
-        return inMemoryUserStorage.create(user);
+        return userService.create(user);
+
     }
 
     @PutMapping()
     public User update(@Valid @RequestBody User user, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на апдейт юзера: '{} {}'",
                 request.getMethod(), request.getRequestURI());
-        return inMemoryUserStorage.update(user);
+        return userService.update(user);
     }
 
     @PutMapping(value = "/{id}/friends/{friendId}")
@@ -59,31 +66,31 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}/friends/{friendId}")
-    public void removeFriend(@Valid @PathVariable long id, @PathVariable long friendId, HttpServletRequest request) {
+    public void deleteFriend(@Valid @PathVariable long id, @PathVariable long friendId, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на удаление из друзей: '{} {}'",
                 request.getMethod(), request.getRequestURI());
-        userService.deleteFriend(id, friendId);
+        userService.deleteUsers(id, friendId);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteUsers(@Valid @PathVariable long id, HttpServletRequest request) {
+        log.info("Получен запрос к эндпоинту на удаление юзера: '{} {}'",
+                request.getMethod(), request.getRequestURI());
+        userService.deleteUsers(id);
     }
 
     @GetMapping(value = "/{id}/friends")
-    public List<User> findFriends(@Valid @PathVariable long id, HttpServletRequest request) {
+    public Collection<User> getFriends(@Valid @PathVariable long id, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на просмотр всех друзей: '{} {}'",
                 request.getMethod(), request.getRequestURI());
-        return userService.findFriends(id);
+        return userService.getFriends(id);
     }
 
     @GetMapping(value = "/{id}/friends/common/{otherId}")
-    public List<User> findCommonFriends(@Valid @PathVariable long id, @PathVariable long otherId, HttpServletRequest request) {
+    public List<User> getCommonFriends(@Valid @PathVariable Long id, @PathVariable Long otherId, HttpServletRequest request) {
         log.info("Получен запрос к эндпоинту на просмотр общих друзей: '{} {}'",
                 request.getMethod(), request.getRequestURI());
-        return userService.findCommonFriends(id, otherId);
-    }
-
-    @GetMapping(value = "/{id}")
-    public User findUserByiD(@PathVariable final long id, HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту на просмотр юзера по id: '{} {}'",
-                request.getMethod(), request.getRequestURI());
-        return userService.findUserById(id);
+        return userService.getCommonFriends(id, otherId);
     }
 
     @ExceptionHandler

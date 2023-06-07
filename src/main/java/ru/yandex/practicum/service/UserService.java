@@ -2,9 +2,9 @@ package ru.yandex.practicum.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.dao.UserDao;
 import ru.yandex.practicum.exceptions.NotFoundException;
 import ru.yandex.practicum.model.User;
-import ru.yandex.practicum.storage.user.UserStorage;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,78 +12,53 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    protected UserStorage userStorage;
-
+    private final UserDao userDao;
 
     @Autowired
-    public UserService(UserStorage userStorage) {
-        this.userStorage = userStorage;
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    private void checkUserExistsOrThrow(long id) {
-        if (id < 1) {
+    public Optional<User> getUserByID(long id) {
+        if (userDao.findUserById(id).isEmpty()) {
             throw new NotFoundException("с таким id юзера нет");
-        } else if (id > userStorage.findAll().size()) {
-            throw new NotFoundException("с таким id юзера нет");
+        } else {
+            return userDao.findUserById(id);
         }
     }
 
-    private void checkFriendExistsOrThrow(long friendId) {
-        if (friendId < 1) {
-            throw new NotFoundException("с таким id юзера нет");
-        } else if (friendId > userStorage.findAll().size()) {
-            throw new NotFoundException("с таким id юзера нет");
-        }
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
+
+    public User create(User user) {
+        return userDao.create(user);
+
+    }
+
+    public User update(User user) {
+        return userDao.update(user);
     }
 
     public void addFriend(long id, long friendId) {
-        checkUserExistsOrThrow(id);
-        checkFriendExistsOrThrow(friendId);
-        if (id == friendId) {
-            throw new NotFoundException("нельзя добавить себя в друзья");
-        } else {
-            userStorage.findUserById(id).getFriends().add(friendId);
-            userStorage.findUserById(friendId).getFriends().add(id);
-        }
+        userDao.addFriend(id, friendId);
     }
 
-    public void deleteFriend(long id, long friendId) {
-        userStorage.findUserById(id).getFriends().remove(friendId);
-        userStorage.findUserById(friendId).getFriends().remove(id);
+    public List<User> getCommonFriends(Long id, Long otherId) {
+        return getFriends(id).stream()
+                .filter(x -> getFriends(otherId).contains(x))
+                .collect(Collectors.toList());
     }
 
-    public List<User> findFriends(long id) {
-        List<User> friends = new ArrayList<>();
-        if (!userStorage.findUserById(id).getFriends().isEmpty()) {
-            for (long n : userStorage.findUserById(id).getFriends()) {
-                friends.add(userStorage.findUserById(n));
-            }
-        }
-        return friends;
+    public Collection<User> getFriends(Long id) {
+        return userDao.findFriends(id);
     }
 
-    public List<User> findCommonFriends(long id, long otherId) {
-        List<User> friends = new ArrayList<>();
-        if (id >= 1 || otherId >= 1) {
-            Set<Long> userFriends = userStorage.findUserById(id).getFriends();
-            Set<Long> otherFriends = userStorage.findUserById(otherId).getFriends();
-            List<Long> commonFriends = userFriends.stream()
-                    .filter(otherFriends::contains)
-                    .collect(Collectors.toList());
-            for (Long commonFriend : commonFriends) {
-                friends.add(userStorage.findUserById(commonFriend));
-            }
-            return friends;
-        } else {
-            throw new NotFoundException("с таким id юзера нет");
-        }
+    public void deleteUsers(long id, long friendId) {
+        userDao.deleteFriend(id, friendId);
     }
 
-    public User findUserById(long id) {
-        if (userStorage.findUserById(id) == null) {
-            throw new NotFoundException("с таким id юзера нет");
-        } else {
-            return userStorage.findUserById(id);
-        }
+    public void deleteUsers(Long id) {
+        userDao.deleteFriend(id);
     }
 }

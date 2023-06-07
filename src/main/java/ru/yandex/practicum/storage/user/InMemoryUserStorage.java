@@ -14,7 +14,6 @@ public class InMemoryUserStorage implements UserStorage {
     public final HashMap<Long, User> users = new HashMap<>();
     private static long id = 0;
 
-
     @Override
     public Collection<User> findAll() {
         return users.values();

@@ -1,21 +1,21 @@
 package ru.yandex.practicum.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.PastOrPresent;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     private long id;
-
-  //  private Set<Long> friends;
 
     @NotEmpty
     @Email
@@ -26,18 +26,14 @@ public class User {
 
     private String name;
 
-    @PastOrPresent
     private LocalDate birthday;
 
-    public User( @NotEmpty @Email String email, @NotEmpty String login, String name, @PastOrPresent LocalDate birthday) {
-
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
-//        if (friends == null) {
-//            this.friends = new HashSet<>();
-//        }
-
+    public Map<String, Object> toMap() {
+        Map<String, Object> values = new HashMap<>();
+        values.put("email", email);
+        values.put("login", login);
+        values.put("name", getName());
+        values.put("birthday", birthday);
+        return values;
     }
 }
