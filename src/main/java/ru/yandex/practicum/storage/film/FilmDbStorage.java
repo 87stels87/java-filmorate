@@ -1,4 +1,4 @@
-package ru.yandex.practicum.dao.impl;
+package ru.yandex.practicum.storage.film;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,13 +19,13 @@ import static ru.yandex.practicum.controller.FilmController.FIRST_DAY_OF_CINEMA;
 
 @Slf4j
 @Component
-public class FilmDaoImpl implements FilmDao {
+public class FilmDbStorage implements FilmDao {
 
     private final JdbcTemplate jdbcTemplate;
     private MpaDao mpaDao;
     private GenreDao genreDao;
 
-    public FilmDaoImpl(JdbcTemplate jdbcTemplate, MpaDao mpaDao, GenreDao genreDao) {
+    public FilmDbStorage(JdbcTemplate jdbcTemplate, MpaDao mpaDao, GenreDao genreDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.mpaDao = mpaDao;
         this.genreDao = genreDao;

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.dao.impl;
+package ru.yandex.practicum.storage.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,11 +18,11 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class UserDaoImpl implements UserDao {
+public class UserDbStorage implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public UserDaoImpl(JdbcTemplate jdbcTemplate) {
+    public UserDbStorage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
