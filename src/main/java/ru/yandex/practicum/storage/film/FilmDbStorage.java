@@ -87,10 +87,10 @@ public class FilmDbStorage implements FilmDao {
                     film.getMpa().getId(),
                     film.getId());
             genreDao.updateGenresOfFilm(film);
-            log.info("Филь {} успешно обновлен", film);
+            log.info("Фильм {} успешно обновлен. id фильма {}", film, film.getId());
             return film;
         } else {
-            throw new NotFoundException("Фильм не найден");
+            throw new NotFoundException(String.format("Фильм с таким id не найден ", film.getId()));
         }
     }
 
@@ -113,7 +113,7 @@ public class FilmDbStorage implements FilmDao {
             } else {
                 film.setGenres(new HashSet<>());
             }
-            log.info("Фильм найден", film);
+            log.info("Фильм с данным id найден", film);
             return Optional.of(film);
         } else {
             return Optional.empty();

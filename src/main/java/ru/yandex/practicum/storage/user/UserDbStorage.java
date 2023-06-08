@@ -100,7 +100,7 @@ public class UserDbStorage implements UserDao {
             log.info("Юзер {} обновлен", user);
             return user;
         } else {
-            throw new NotFoundException("Юзер для апдейта не найден");
+            throw new NotFoundException("Юзер для апдейта с данным id не найден");
         }
     }
 
@@ -130,7 +130,7 @@ public class UserDbStorage implements UserDao {
                     id
             );
         } else {
-            throw new NotFoundException("Юзер не найден");
+            throw new NotFoundException("Друг с таким id не найден");
         }
     }
 
@@ -140,7 +140,7 @@ public class UserDbStorage implements UserDao {
             String sql = "DELETE FROM FRIENDS WHERE user_id = ? AND friends_id = ?";
             jdbcTemplate.update(sql, id, friendId);
         } else {
-            throw new NotFoundException("Юзер для удаления из друзей не найден");
+            throw new NotFoundException("Юзер для удаления из друзей с таким id не найден");
         }
     }
 
@@ -150,7 +150,7 @@ public class UserDbStorage implements UserDao {
             String sql = "DELETE FROM USERS WHERE id = ?";
             jdbcTemplate.update(sql, id);
         } else {
-            throw new NotFoundException("Юзер для удаления из друзей не найден");
+            throw new NotFoundException("Юзер для удаления из друзей с таким id не найден");
         }
     }
 
